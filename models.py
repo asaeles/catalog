@@ -5,8 +5,7 @@ import random
 import string
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship, sessionmaker
-from sqlalchemy import create_engine
+from sqlalchemy.orm import relationship
 from passlib.apps import custom_app_context as pwd_context
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer,
                           BadSignature, SignatureExpired)
@@ -116,7 +115,3 @@ class Item(Base):
             'category_id': self.category_id
         }
 
-
-engine = create_engine('sqlite:///catalog.db')
-
-Base.metadata.create_all(engine)
