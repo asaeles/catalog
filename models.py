@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 # DB model file
 
+import os
 import random
 import string
 from sqlalchemy import Column, Integer, String, ForeignKey
@@ -10,12 +11,24 @@ from passlib.apps import custom_app_context as pwd_context
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer,
                           BadSignature, SignatureExpired)
 
-Base = declarative_base()
 # This randomly generated key changes every time
 #  python script starts, it is used in creating
 #  auth tokens
 secret_key = ''.join(random.choice(
     string.ascii_uppercase + string.digits) for x in xrange(32))
+
+# Prepare SQLAlchemy DB engine
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+parser = SafeConfigParser()
+parser.read('catalog.ini')
+connect_string = parser.get('db', 'connect_string')
+engine = create_engine(connect_string)
+
+
+# Start ORM
+Base = declarative_base()
 
 
 class User(Base):
@@ -115,3 +128,6 @@ class Item(Base):
             'category_id': self.category_id
         }
 
+
+Base.metadata.bind = engine
+Base.metadata.create_all(engine)

@@ -1,36 +1,23 @@
 #!/usr/bin/env python2
 # DB helper file
 
-import os
 from ConfigParser import SafeConfigParser
 from flask import jsonify
-from models import Base, User, Category, Item
+from models import Base, User, Category, Item, engine
 from sqlalchemy.pool import StaticPool
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 # Prepare SQLAlchemy DB session
-abspath = os.path.abspath(__file__)
-dname = os.path.dirname(abspath)
-os.chdir(dname)
-parser = SafeConfigParser()
-parser.read('catalog.ini')
-connect_string = parser.get('db', 'connect_string')
-engine = create_engine(connect_string)
-Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 # Authentication
-
-
 def verifyAuthToken(username_or_token_or_guid):
     """Verify auth token and return user ID if successful."""
     return User.verify_auth_token(username_or_token_or_guid)
 
 # Authorization
-
-
 def checkAuthorization(table_name, id, user_id):
     """Return true if the supplied user is the one who created
     the supplied object otherwise return false."""
