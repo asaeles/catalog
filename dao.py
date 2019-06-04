@@ -1,6 +1,8 @@
 #!/usr/bin/env python2
 # DB helper file
 
+import os
+from ConfigParser import SafeConfigParser
 from flask import jsonify
 from models import Base, User, Category, Item
 from sqlalchemy.pool import StaticPool
@@ -8,9 +10,13 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 # Prepare SQLAlchemy DB session
-engine = create_engine('sqlite:///catalog.db',
-                       connect_args={'check_same_thread': False},
-                       poolclass=StaticPool)
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+parser = SafeConfigParser()
+parser.read('catalog.ini')
+connect_string = parser.get('db', 'connect_string')
+engine = create_engine(connect_string)
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()

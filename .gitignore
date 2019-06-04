@@ -1,4 +1,5 @@
 __pycache__
 *.pyc
 *db
+catalog.ini
 client_secrets.json

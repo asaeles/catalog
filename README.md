@@ -17,15 +17,15 @@ O-Auth login using Google is supported.
 
 * For Google O-Auth to work you must:
   1. Edit `templates/app.html` and put your client id under the content of the `meta` tag wit the name `google-signin-client_id`
-  2. Save your application's `client_secrets.json` beside `views.py`
+  2. Save your application's `client_secrets.json` beside `catalog.py`
 
-* Run the Vagrant machine and SSH to it
+* Rename file `catalog_default.ini` to `catalog.ini` and update DB connect string
 
-* Run the Redis DB Server: `redis-server &`
+* Run the Redis DB Server: `nohup redis-server &`
 
-* Run the main app file: `python /vagrant/catalog/views.py &`
+* Run the main app file: `python /vagrant/catalog/catalog.py &`
 
-* Open "http://localhost:5000/" on browser
+* Visit "http://localhost/" on browser
 
 ## Known Issues
 
