@@ -1,8 +1,10 @@
 #!/usr/bin/env python2
 # Flask API endpoint file
 
+import sys
 import json
 import time
+import logging
 import requests
 from dao import (verifyAuthToken, getUser, getUserByUsername, addUser,
                  getAllCategories, getCategoriesByName, addCategory,
@@ -24,6 +26,10 @@ redis = Redis()
 auth = HTTPBasicAuth()
 app = Flask(__name__)
 handler = JSONExceptionHandler(app)
+handler2 = logging.StreamHandler(sys.stdout)
+handler2.setFormatter(logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+app.logger.addHandler(handler2)
 
 
 class RegexConverter(BaseConverter):
@@ -353,4 +359,4 @@ def get_catalog():
 # Finally application start if file is run as main
 if __name__ == '__main__':
     app.debug = True
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=80)

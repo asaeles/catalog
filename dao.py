@@ -1,11 +1,8 @@
 #!/usr/bin/env python2
 # DB helper file
 
-from ConfigParser import SafeConfigParser
 from flask import jsonify
 from models import Base, User, Category, Item, engine
-from sqlalchemy.pool import StaticPool
-from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 # Prepare SQLAlchemy DB session

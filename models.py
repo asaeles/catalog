@@ -4,7 +4,11 @@
 import os
 import random
 import string
+import logging
+from ConfigParser import SafeConfigParser
+from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.pool import StaticPool
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from passlib.apps import custom_app_context as pwd_context
@@ -38,7 +42,7 @@ class User(Base):
     username = Column(String(32), index=True)
     picture = Column(String)
     email = Column(String, index=True)
-    password_hash = Column(String(64))
+    password_hash = Column(String)
     categories = relationship('Category', backref='user')
     items = relationship('Item', backref='user')
 

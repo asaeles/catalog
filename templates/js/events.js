@@ -59,7 +59,7 @@ $("#sign-in-button").click(function(event) {
   // First things first, disable the sign in button
   loadingOn();
   // Attempt sign in
-  signInAction();
+  signInAction($("#username-in").val(), $("#password-in").val());
 });
 
 // Sign up button event handler

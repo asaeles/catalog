@@ -46,6 +46,8 @@ function userSignOut() {
       refreshCatalog(data);
       loadingOff();
     });
+  } else {
+    loadingOff();
   }
 }
 
@@ -133,8 +135,15 @@ function signUpAction4() {
   $.ajax({
     type: "GET",
     url: "/api/v1/token",
-    username: $("#username-up").val(),
-    password: $("#password-up-1").val(),
+    // username: $("#username-up").val(),
+    // password: $("#password-up-1").val(),
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader(
+        "Authorization",
+        "Basic " +
+          btoa($("#username-up").val() + ":" + $("#password-up-1").val())
+      );
+    },
     success: function(data) {
       if (data.token) {
         Cookies.set("token", data.token, { expires: 1 / 24 });
@@ -166,8 +175,8 @@ function signUpAction3() {
       email: ""
     }),
     success: function(data) {
-      Cookies.set("user_id", data.id);
-      Cookies.set("username", data.username);
+      Cookies.set("user_id", data.user.id);
+      Cookies.set("username", data.user.username);
       signUpAction4();
     },
     error: function(data) {
