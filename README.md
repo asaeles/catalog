@@ -12,6 +12,7 @@ O-Auth login using Google is supported.
   * Flask
   * SQLAlchemy
   * Redis DB Server
+  * Databse server of your choice (tested for PostgreSQL)
 
 ## Usage
 
@@ -19,11 +20,11 @@ O-Auth login using Google is supported.
   1. Edit `templates/app.html` and put your client id under the content of the `meta` tag wit the name `google-signin-client_id`
   2. Save your application's `client_secrets.json` beside `catalog.py`
 
-* Rename file `catalog_default.ini` to `catalog.ini` and update DB connect string
+* Copy the file `catalog_default.ini` to `catalog.ini` and update DB connect string
 
 * Run the Redis DB Server: `nohup redis-server &`
 
-* Run the main app file: `python /vagrant/catalog/catalog.py &`
+* Run the main app file: `nohup python catalog.py &`
 
 * Visit "http://localhost/" on browser
 
